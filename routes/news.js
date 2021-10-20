@@ -6,10 +6,10 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) { // baseURL: http://localhost:5000/news
     const query = req.query;
-    //console.log(query.keys(values).length);
     if (query === undefined) {
-        res.send("Successfully get all news");
+        res.send("ERROR: No related news");
     } else if (Object.keys(query).length == 1) {
+
         if (query.hasOwnProperty('page')) {
             res.send(`Successfully get page ${query.page} news`);
         } else if (query.hasOwnProperty('q')) {
@@ -21,11 +21,12 @@ router.get('/', function(req, res, next) { // baseURL: http://localhost:5000/new
         } else if (query.hasOwnProperty('city')) {
             res.send(`${query.city}`)
         } else if (query.hasOwnProperty('category')) {
-            res.send(`Successfully get all news that have category according to ${query.category}`)
+            res.send(`Successfully get all news that have category according to ${query.category}`)   
         }
+
     } else if (Object.keys(query).length > 1) {
-        //console.log(query);
-        res.send(`Successfully get all news that have a string of all queries and theirs dynamicValue`);
+        let queries = Object.keys(query).map((key) => [` ${key}: ${query[key]}`]);
+        res.send(`Successfully get all news that have a string of all queries and theirs dynamicValue: ${queries}`);
     }
 });
 
@@ -47,7 +48,7 @@ router.post('/', function (req, res, next) {
 
 router.put('/:id', function (req, res, next) {
     const input = req.body;
-    console.log(input.category.length);
+    //console.log(input.category.length);
     let category1 = input.category.slice(0, input.category.length - 1).toString();
     let category01 = category1.replace(",", ", ");
     let category2 = input.category.pop();
