@@ -25,8 +25,9 @@ router.get('/', function(req, res, next) { // baseURL: http://localhost:5000/new
         }
 
     } else if (Object.keys(query).length > 1) {
-        let queries = Object.keys(query).map((key) => [` ${key}: ${query[key]}`]);
-        res.send(`Successfully get all news that have a string of all queries and theirs dynamicValue: ${queries}`);
+        let queriesArr = Object.keys(query).map((key) => [` ${key}: ${query[key]}`]);
+        let queryString = queriesArr.join(", ");
+        res.send(`Successfully get all news that have a string of all queries and theirs dynamicValue: ${queryString}`);
     }
 });
 
